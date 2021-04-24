@@ -1,0 +1,177 @@
+<html>
+<head>
+<title>五子棋</title>
+</head>
+<script language="javascript">
+
+var turn = 0;
+var size =8;
+
+var a = new Array(8);
+for(var i = 0; i < size; i++){
+	a[i] = new Array(8);
+}
+	
+var x,y;
+
+
+function put(event){
+	if ((typeof event == "undefined")||(!event))
+		event = window.event;
+	var e1 = event.target || event.srcElement;
+	x = e1.name.substring(1, 2);
+	y = e1.name.substring(2, 3);
+	x = parseInt(x, 10);
+	y = parseInt(y, 10);
+	 if(a[x][y]!=0 && a[x][y]!=1){
+		if (turn%2==0){
+		e1.innerHTML = "x";
+		a[x][y]=0;
+		turn++;
+		}else{
+		e1.innerHTML = "O";
+		a[x][y]=1;
+		turn++;
+		}	
+	}
+ 	
+	//alert('now pos, (' + x + ' ,' + y + ')');
+	checkywin();
+	checkxwin();
+	checkxywin();
+
+}
+
+function checkxwin()
+{
+	
+	var n = (turn-1)%2;//1 = x, 2 = o
+	var x1=x,y1=y;
+	var w = 1;
+		while(a[x1][y1] == n){
+		x1-=1;
+		
+	}
+	
+	
+		
+	
+	x1+=1;
+	
+	for(var i = 0; i < 5;i++){
+		if(a[x1][y1] != n)
+		{
+			w = 0;
+			break;
+		}
+		x1+=1;	
+	}
+	if(w == 1){
+		if(n == 0)
+			alert("X win!");
+		if(n == 1)
+			alert("O win!");
+	}
+}
+function checkywin()
+{
+	var n = (turn-1)%2;//1 = x, 2 = o
+	var x1=x,y1=y;
+	var w = 1;
+	//alert(n);
+	//alert(a[x1][y1]);
+	
+	while(a[x1][y1] == n){
+		y1-=1;
+	}
+	
+	y1+=1;
+	//alert(y1);
+	
+	
+	for(var i = 0; i < 5;i++){
+		if(a[x1][y1] != n)
+		{
+			w = 0;
+			break;
+		}
+		y1+=1;	
+	}
+	if(w == 1){
+		if(n == 0)
+			alert("X win!");
+		if(n == 1)
+			alert("O win!");
+	}
+
+}
+function checkxywin()
+{
+	//alert("chaeck xy")
+	var n = (turn-1)%2;//1 = x, 2 = o
+	var x1=x,y1=y;
+	var w = 1;
+	//alert(n);
+	//alert(a[x1][y1]);
+	
+	while(a[x1][y1] == n){
+		x1-=1;
+		y1-=1;
+	}
+	x1+=1;
+	y1+=1;
+	//alert(x1);
+	//alert(y1);
+	
+	for(var i = 0; i < 5;i++){
+		if(a[x1][y1] != n)
+		{
+			w = 0;
+			break;
+		}
+		x1+=1;
+		y1+=1;	
+	}
+
+	if(w == 1){
+		if(n == 0)
+			alert("X win!");
+		if(n == 1)
+			alert("O win!");
+	}
+}
+function init(){
+   var table = document.createElement("TABLE");
+   document.body.appendChild(table);
+   table.border = "2";
+   table.cellSpacing = "2";
+   table.bgColor = "white";
+   table.align="center";	
+   
+   var a, b;
+   
+   for(a=0;a<size;a++){
+	r = table.insertRow(a);
+	for(b=0;b<size;b++){
+		c = r.insertCell(b);
+		c.width="50";
+		c.height="50";
+		c.name='c'+a+b;
+		c.id = c.name;
+		c.vAlign="center";
+		c.align="center";
+		c.onclick = put;
+		//c.innerHTML="aaa";
+		
+		c.appendChild(document.createTextNode(""));
+	}
+   }
+   
+}
+
+</script>
+
+<body onLoad="init()">
+
+</body>
+</html>
