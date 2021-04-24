@@ -11,7 +11,12 @@ var a = new Array(8);
 for(var i = 0; i < size; i++){
 	a[i] = new Array(8);
 }
-	
+for(var i = 0; i < size; i++){
+	for(var j = 0; j < size; j++){
+		a[i][j] = 2;
+	}
+}
+
 var x,y;
 
 
@@ -24,6 +29,7 @@ function put(event){
 	x = parseInt(x, 10);
 	y = parseInt(y, 10);
 	 if(a[x][y]!=0 && a[x][y]!=1){
+		
 		if (turn%2==0){
 		e1.innerHTML = "x";
 		a[x][y]=0;
@@ -32,7 +38,8 @@ function put(event){
 		e1.innerHTML = "O";
 		a[x][y]=1;
 		turn++;
-		}	
+		}
+		//alert(a[x][y]);	
 	}
  	
 	//alert('now pos, (' + x + ' ,' + y + ')');
@@ -48,15 +55,16 @@ function checkxwin()
 	var n = (turn-1)%2;//1 = x, 2 = o
 	var x1=x,y1=y;
 	var w = 1;
-		while(a[x1][y1] == n){
+	if(x1 > 0){
+	while(a[x1][y1] == n){
 		x1-=1;
-		
+		if(x1 < 0)
+		break;
 	}
-	
-	
-		
-	
 	x1+=1;
+	}
+
+	
 	
 	for(var i = 0; i < 5;i++){
 		if(a[x1][y1] != n)
@@ -81,11 +89,12 @@ function checkywin()
 	//alert(n);
 	//alert(a[x1][y1]);
 	
-	while(a[x1][y1] == n){
-		y1-=1;
-	}
+		while(a[x1][y1] == n){
+			y1-=1;
+		}
+		y1+=1;
 	
-	y1+=1;
+	
 	//alert(y1);
 	
 	
@@ -113,13 +122,16 @@ function checkxywin()
 	var w = 1;
 	//alert(n);
 	//alert(a[x1][y1]);
-	
+	if(x1 > 0){
 	while(a[x1][y1] == n){
 		x1-=1;
 		y1-=1;
+		if(x1 < 0)
+		break;
 	}
 	x1+=1;
 	y1+=1;
+	}
 	//alert(x1);
 	//alert(y1);
 	
