@@ -43,24 +43,30 @@ $(function(){
     imgEnemy.src = "images/Enemy.png";
     imgSword = new Image();
     imgSword.src = "images/Sword.png";
+    imgTreasure = new Image();
+    imgTreasure.src = "images/treasure.png";
     
         imgMountain.onload = function(){
             imgEnemy.onload = function(){
                 imgSword.onload = function(){
+                    imgTreasure.onload = function(){
                 for(var x in mapArray){
                     for(var y in mapArray[x]){
                         if(mapArray[x][y]==1){
-                            ctx.drawImage(imgMountain, 32,65,32,32,y*gridLength,x*gridLength,gridLength,gridLength);
+                            ctx.drawImage(imgMountain, 32,65,500,500,y*gridLength,x*gridLength,gridLength,gridLength);
                         }else if(mapArray[x][y]==3){
-                            ctx.drawImage(imgEnemy, 7,40,104,135,y*gridLength,x*gridLength,gridLength,gridLength);
+                            ctx.drawImage(imgEnemy, 7,40,500,500,y*gridLength,x*gridLength,gridLength,gridLength);
                         }else if(mapArray[x][y]==4){
                             ctx.drawImage(imgSword, 7,10,135,135,y*gridLength,x*gridLength,gridLength,gridLength);
-                        }
+                        }else if(mapArray[x][y]==2){
+                            ctx.drawImage(imgTreasure, 20,20,490,490,y*gridLength,x*gridLength,gridLength,gridLength);
+                        } 
                     }
                 }
             }
         }
     }
+}
     });
     //處理使用者按下按鍵
     $(document).on("keydown",function(event){
@@ -129,9 +135,11 @@ $(function(){
             targetBlock.x = -1;
             targetBlock.y = -1;
         }
+        
         //清空主角原本所在的位置
         ctx.clearRect(currentImgMain.x, currentImgMain.y, gridLength, gridLength);
         if(targetBlock.x!=-1 && targetBlock.y!=-1){
+           
             switch(mapArray[targetBlock.x][targetBlock.y]){
             case 0: // 一般道路(可移動)
             $("#talkBox").text("");
@@ -145,14 +153,16 @@ $(function(){
             $("#talkBox").text("抵達終點");
             currentImgMain.x = targetImg.x;
             currentImgMain.y = targetImg.y;
+            alert("you win!");
             break;
             case 3: // 敵人(不可移動)
             if(attack == 1){
                 $("#talkBox").text("打敗敵人");
                 currentImgMain.x = targetImg.x;
                 currentImgMain.y = targetImg.y;
+               
             }else{   
-                $("#talkBox").text("哈摟");
+                $("#talkBox").text("哈嘍，你被打敗了");
                 currentImgMain.x = 0;
                 currentImgMain.y = 0;} 
             break;
@@ -161,6 +171,7 @@ $(function(){
             currentImgMain.x = targetImg.x;
             currentImgMain.y = targetImg.y;
             attack = 1;
+        
             break;
             }
             }else{
